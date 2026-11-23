@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <!-- Базовые метаданные и адаптация под мобильные экраны -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IG RA Studios — Официальный сайт в разработке</title>
+
+  <!-- Единый стиль: тёмный плоский минимализм с неоново-фиолетовыми и оранжевыми акцентами -->
+  <style>
+    :root {
+      --bg-canvas: #0e0d12;
+      --bg-surface: #15141c;
+      --bg-chip: #1c1a26;
+      --border-subtle: #282536;
+      --text-primary: #f4f2f8;
+      --text-secondary: #a6a0b8;
+      --text-muted: #757087;
+      --accent-purple: #9d4edd;
+      --accent-purple-soft: rgba(157, 78, 221, 0.14);
+      --accent-orange: #ff7b00;
+      --accent-orange-soft: rgba(255, 123, 0, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Центральный контейнер с аккуратной геометрической рамкой */
+    .wrapper {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      position: relative;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 32px 24px;
+    }
+
+    /* Тонкая двухцветная полоса-акцент вверху панели */
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background-color: var(--accent-purple);
+      border-radius: 0 0 2px 2px;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 24px;
+      width: 72px;
+      height: 2px;
+      background-color: var(--accent-orange);
+    }
+
+    @media (min-width: 640px) {
+      .panel {
+        padding: 44px 40px;
+      }
+
+      .panel::before {
+        left: 40px;
+        right: 40px;
+      }
+
+      .panel::after {
+        right: 40px;
+        width: 96px;
+      }
+    }
+
+    /* Верхняя строка с геометрическим знаком студии */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .geo-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .geo-square {
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--accent-purple);
+      border-radius: 2px;
+    }
+
+    .geo-diamond {
+      width: 9px;
+      height: 9px;
+      background-color: var(--accent-orange);
+      transform: rotate(45deg);
+      border-radius: 1px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-orange);
+      background-color: var(--accent-orange-soft);
+      border: 1px solid rgba(255, 123, 0, 0.32);
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent-orange);
+    }
+
+    /* Главный заголовок студии и текст-затычка */
+    .studio-title {
+      font-size: 36px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .studio-title .accent-word {
+      color: var(--accent-purple);
+    }
+
+    .studio-title .accent-slash {
+      color: var(--accent-orange);
+      margin: 0 2px;
+    }
+
+    @media (min-width: 640px) {
+      .studio-title {
+        font-size: 48px;
+      }
+    }
+
+    .lead {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 640px) {
+      .lead {
+        font-size: 17px;
+      }
+    }
+
+    /* Компактный блок статусов и анонсов */
+    .updates-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 560px) {
+      .updates-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .update-card {
+      background-color: var(--bg-chip);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .update-card--featured {
+      border-color: rgba(157, 78, 221, 0.45);
+    }
+
+    .update-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tag-purple {
+      color: #c77dff;
+    }
+
+    .tag-orange {
+      color: var(--accent-orange);
+    }
+
+    .update-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .update-desc {
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--text-secondary);
+    }
+
+    /* Нижняя геометрическая полоса внутри карточки */
+    .geo-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .geo-line {
+      flex: 1;
+      height: 1px;
+      background-color: var(--border-subtle);
+    }
+
+    .geo-block-sm {
+      width: 18px;
+      height: 4px;
+      background-color: var(--accent-purple);
+      border-radius: 2px;
+    }
+
+    .geo-block-or {
+      width: 10px;
+      height: 4px;
+      background-color: var(--accent-orange);
+      border-radius: 2px;
+    }
+
+    /* Футер с копирайтом */
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-note {
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <main class="panel" aria-label="Заглушка студии IG RA Studios">
+      <!-- Верхняя полоса с геометрией и статусом -->
+      <div class="top-bar">
+        <div class="brand-mark">
+          <span class="geo-icon" aria-hidden="true">
+            <span class="geo-square"></span>
+            <span class="geo-diamond"></span>
+          </span>
+          <span>Murrami / Build Placeholder</span>
+        </div>
+
+        <div class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Скоро запуск</span>
+        </div>
+      </div>
+
+      <!-- Крупное название студии -->
+      <h1 class="studio-title">
+        IG<span class="accent-slash">/</span>RA <span class="accent-word">Studios</span>
+      </h1>
+
+      <!-- Краткая фраза-затычка -->
+      <p class="lead">
+        Официальный портал и новые релизы студии готовятся к запуску.
+        Активация <strong>Chara Simulator II</strong> откроется в <strong>январе 2027</strong> — сохраните карточку с кодом до старта.
+      </p>
+
+      <!-- Компактный блок статусов и анонсов -->
+      <section class="updates-grid" aria-label="Статусы и анонсы">
+        <article class="update-card update-card--featured">
+          <div class="update-meta">
+            <span class="tag-orange">Январь 2027</span>
+            <span class="tag-purple">Limited Edition</span>
+          </div>
+          <h2 class="update-title">Chara Simulator II</h2>
+          <p class="update-desc">
+            Открытие активации кодов из физических изданий и публикация сборки игры.
+          </p>
+        </article>
+
+        <article class="update-card">
+          <div class="update-meta">
+            <span class="tag-purple">В разработке</span>
+            <span class="tag-orange">Портал</span>
+          </div>
+          <h2 class="update-title">Сайт и будущие релизы</h2>
+          <p class="update-desc">
+            Собираем основной раздел студии, новости по Муррами и следующие проекты.
+          </p>
+        </article>
+      </section>
+
+      <!-- Геометрический разделитель -->
+      <div class="geo-divider" aria-hidden="true">
+        <span class="geo-block-sm"></span>
+        <span class="geo-block-or"></span>
+        <span class="geo-line"></span>
+      </div>
+
+      <!-- Футер с копирайтом -->
+      <footer class="footer">
+        <span class="footer-note">© 2026–2027 IG RA Studios. Все права защищены.</span>
+        <span>Chara Simulator II • Murrami</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
